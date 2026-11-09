@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Blockers | ProjectBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <h2 class="brand">ProjectBridge</h2>
+
+        <div class="menu">
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/projects" class="nav-link">Projects</a>
+            <a href="/tasks" class="nav-link">Tasks</a>
+            <a href="/updates" class="nav-link">Activity Updates</a>
+            <a href="/blockers" class="nav-link active">Blockers</a>
+            <a href="/decisions" class="nav-link">Decisions</a>
+            <a href="/documents" class="nav-link">Documents</a>
+            <a href="/gap-check" class="nav-link">Gap Check</a>
+            <a href="/handover" class="nav-link">Handover Report</a>
+        </div>
+
+        <div class="sidebar-footer">
+            Project Management System
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h2>Project Blockers</h2>
+                <p>Manage project problems and track their progress.</p>
+            </div>
+        </div>
+
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div>
+                <h1>Manage Blockers</h1>
+                <p>Identify problems, add next steps and monitor their status.</p>
+            </div>
+        </section>
+
+
+        <!-- Add Blocker Form -->
+        <section class="blockers-form-section">
+
+            <div class="section-heading">
+                <h2>Add New Blocker</h2>
+                <p>Record a problem that is affecting your project.</p>
+            </div>
+
+            <div class="blocker-form-card">
+
+                <form method="POST">
+
+                    <div class="form-group">
+                        <label>Blocker Title</label>
+                        <input type="text" name="title"
+                               placeholder="Enter problem title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description"
+                                  placeholder="Explain the problem"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Next Step</label>
+                        <textarea name="next_step"
+                                  placeholder="What should be done to solve this problem?"
+                                  required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Project</label>
+                        <select name="project_id" required>
+                            {% for project in projects %}
+                                <option value="{{ project[0] }}">
+                                    {{ project[1] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="primary-btn">
+                        + Add Blocker
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- Blocker List -->
+        <section class="blocker-list-section">
+
+            <div class="section-heading">
+                <h2>Blocker List</h2>
+                <p>View and update existing project blockers.</p>
+            </div>
+
+            <div class="blocker-list">
+
+                {% for blocker in blockers %}
+
+                    <div class="blocker-item">
+
+                        <div class="blocker-icon">!</div>
+
+                        <div class="blocker-details">
+
+                            <h3>{{ blocker[2] }}</h3>
+
+                            <p>
+                                {{ blocker[3] or "No description added." }}
+                            </p>
+
+                            <p>
+                                <strong>Next Step:</strong>
+                                {{ blocker[5] or "Not Added" }}
+                            </p>
+
+                            <span class="blocker-status
+                                {% if blocker[4] == 'Resolved' %}
+                                    resolved
+                                {% elif blocker[4] == 'In Progress' %}
+                                    in-progress
+                                {% else %}
+                                    open
+                                {% endif %}">
+                                {{ blocker[4] }}
+                            </span>
+
+                            <form method="POST"
+                                  action="/update_blocker/{{ blocker[0] }}"
+                                  class="blocker-status-form">
+
+                                <label>Update Status:</label>
+
+                                <select name="status">
+
+                                    <option value="Open"
+                                        {% if blocker[4] == "Open" %}selected{% endif %}>
+                                        Open
+                                    </option>
+
+                                    <option value="In Progress"
+                                        {% if blocker[4] == "In Progress" %}selected{% endif %}>
+                                        In Progress
+                                    </option>
+
+                                    <option value="Resolved"
+                                        {% if blocker[4] == "Resolved" %}selected{% endif %}>
+                                        Resolved
+                                    </option>
+
+                                </select>
+
+                                <button type="submit" class="update-status-btn">
+                                    Update Status
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-blockers">
+                        <h3>No Blockers Yet</h3>
+                        <p>There are no project blockers added right now.</p>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        <footer class="dashboard

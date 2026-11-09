@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Decisions | ProjectBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <h2 class="brand">ProjectBridge</h2>
+
+        <div class="menu">
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/projects" class="nav-link">Projects</a>
+            <a href="/tasks" class="nav-link">Tasks</a>
+            <a href="/updates" class="nav-link">Activity Updates</a>
+            <a href="/blockers" class="nav-link">Blockers</a>
+            <a href="/decisions" class="nav-link active">Decisions</a>
+            <a href="/documents" class="nav-link">Documents</a>
+            <a href="/gap-check" class="nav-link">Gap Check</a>
+            <a href="/handover" class="nav-link">Handover Report</a>
+        </div>
+
+        <div class="sidebar-footer">
+            Project Management System
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h2>Project Decisions</h2>
+                <p>Keep important project decisions organised.</p>
+            </div>
+        </div>
+
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div>
+                <h1>Manage Decisions</h1>
+                <p>Record important decisions and the reasons behind them.</p>
+            </div>
+        </section>
+
+
+        <!-- Add Decision Form -->
+        <section class="decisions-form-section">
+
+            <div class="section-heading">
+                <h2>Add New Decision</h2>
+                <p>Document an important decision made for your project.</p>
+            </div>
+
+            <div class="decision-form-card">
+
+                <form method="POST">
+
+                    <div class="form-group">
+                        <label>Decision Title</label>
+                        <input type="text" name="title"
+                               placeholder="Enter decision" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Reason for Decision</label>
+                        <textarea name="reason"
+                                  placeholder="Why was this decision taken?"
+                                  required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Project</label>
+                        <select name="project_id" required>
+                            {% for project in projects %}
+                                <option value="{{ project[0] }}">
+                                    {{ project[1] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="primary-btn">
+                        + Save Decision
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- Previous Decisions -->
+        <section class="decision-list-section">
+
+            <div class="section-heading">
+                <h2>Previous Decisions</h2>
+                <p>Review the decisions already recorded.</p>
+            </div>
+
+            <div class="decision-list">
+
+                {% for decision in decisions %}
+
+                    <div class="decision-item">
+
+                        <div class="decision-icon">✓</div>
+
+                        <div class="decision-details">
+                            <h3>{{ decision[2] }}</h3>
+                            <p>{{ decision[3] }}</p>
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-decisions">
+                        <h3>No Decisions Yet</h3>
+                        <p>No project decisions have been recorded yet.</p>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        <footer class="dashboard-footer">
+            ProjectBridge | Project Management System
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

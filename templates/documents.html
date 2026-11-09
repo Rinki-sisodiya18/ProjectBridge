@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Documents | ProjectBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <h2 class="brand">ProjectBridge</h2>
+
+        <div class="menu">
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/projects" class="nav-link">Projects</a>
+            <a href="/tasks" class="nav-link">Tasks</a>
+            <a href="/updates" class="nav-link">Activity Updates</a>
+            <a href="/blockers" class="nav-link">Blockers</a>
+            <a href="/decisions" class="nav-link">Decisions</a>
+            <a href="/documents" class="nav-link active">Documents</a>
+            <a href="/gap-check" class="nav-link">Gap Check</a>
+            <a href="/handover" class="nav-link">Handover Report</a>
+        </div>
+
+        <div class="sidebar-footer">
+            Project Management System
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h2>Project Documents</h2>
+                <p>Store and organise important project resources.</p>
+            </div>
+        </div>
+
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div>
+                <h1>Manage Documents</h1>
+                <p>Keep project files, links and descriptions in one place.</p>
+            </div>
+        </section>
+
+
+        <!-- Add Document Form -->
+        <section class="documents-form-section">
+
+            <div class="section-heading">
+                <h2>Add New Document</h2>
+                <p>Add useful files and resources related to your project.</p>
+            </div>
+
+            <div class="document-form-card">
+
+                <form method="POST">
+
+                    <div class="form-group">
+                        <label>Document Title</label>
+                        <input type="text" name="title"
+                               placeholder="Enter document name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Document Link</label>
+                        <input type="url" name="link"
+                               placeholder="Paste document link">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description"
+                                  placeholder="Enter document details"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Project</label>
+                        <select name="project_id" required>
+                            {% for project in projects %}
+                                <option value="{{ project[0] }}">
+                                    {{ project[1] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="primary-btn">
+                        + Save Document
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- Saved Documents -->
+        <section class="document-list-section">
+
+            <div class="section-heading">
+                <h2>Saved Documents</h2>
+                <p>Access your previously saved project resources.</p>
+            </div>
+
+            <div class="document-list">
+
+                {% for document in documents %}
+
+                    <div class="document-item">
+
+                        <div class="document-icon">📄</div>
+
+                        <div class="document-details">
+
+                            <h3>{{ document[2] }}</h3>
+
+                            <p>
+                                {{ document[4] or "No description added." }}
+                            </p>
+
+                            {% if document[3] %}
+                                <a href="{{ document[3] }}"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="document-link">
+                                    Open Document →
+                                </a>
+                            {% else %}
+                                <span class="no-document-link">
+                                    No link available
+                                </span>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-documents">
+                        <h3>No Documents Yet</h3>
+                        <p>No project documents have been added yet.</p>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <footer class="dashboard-footer">
+            ProjectBridge | Project Management System
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

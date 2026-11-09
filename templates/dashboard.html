@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ProjectBridge Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <div class="brand">
+                <h2>Project<span>Bridge</span></h2>
+                <p>PROJECT MANAGEMENT</p>
+            </div>
+
+            <div class="menu">
+
+                <p class="menu-heading">MAIN MENU</p>
+
+                <a href="/dashboard" class="nav-link active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="/projects" class="nav-link">
+                    <span>▣</span> Projects
+                </a>
+
+                <a href="/tasks" class="nav-link">
+                    <span>✓</span> Tasks
+                </a>
+
+                <a href="/updates" class="nav-link">
+                    <span>↻</span> Activity Updates
+                </a>
+
+                <p class="menu-heading">MANAGEMENT</p>
+
+                <a href="/blockers" class="nav-link">
+                    <span>⚑</span> Blockers
+                </a>
+
+                <a href="/decisions" class="nav-link">
+                    <span>◇</span> Decisions
+                </a>
+
+                <a href="/documents" class="nav-link">
+                    <span>▤</span> Documents
+                </a>
+
+                <p class="menu-heading">REPORTS</p>
+
+                <a href="/handover" class="nav-link">
+                    <span>▧</span> Handover Report
+                </a>
+
+                <a href="/gap-check" class="nav-link">
+                    <span>⌕</span> Gap Check
+                </a>
+
+            </div>
+
+            <div class="sidebar-footer">
+                <h3>ProjectBridge</h3>
+                <p>Smart Project Handover</p>
+            </div>
+
+        </div>
+
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Topbar -->
+            <div class="topbar">
+
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Welcome back! Here's your project overview.</p>
+                </div>
+
+                <div class="profile">
+
+                    <div class="profile-icon">PB</div>
+
+                    <div>
+                        <strong>Project Workspace</strong>
+                        <small>Management Panel</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+
+                <div>
+                    <h2>Welcome to ProjectBridge!</h2>
+
+                    <p>
+                        Manage projects, track progress and create
+                        smooth team handovers.
+                    </p>
+                </div>
+
+                <a href="/projects" class="primary-btn">
+                    + Add Project
+                </a>
+
+            </div>
+
+
+            <!-- Project Overview -->
+            <div class="section-heading">
+
+                <h2>Project Overview</h2>
+
+                <p>A quick look at your workspace.</p>
+
+            </div>
+
+
+            <!-- Statistics Cards -->
+            <div class="cards">
+
+                <div class="card project-card">
+
+                    <div class="card-icon">▣</div>
+
+                    <h3>Total Projects</h3>
+
+                    <h2>{{ total_projects }}</h2>
+
+                </div>
+
+
+                <div class="card pending-card">
+
+                    <div class="card-icon">◷</div>
+
+                    <h3>Pending Tasks</h3>
+
+                    <h2>{{ pending_tasks }}</h2>
+
+                </div>
+
+
+                <div class="card completed-card">
+
+                    <div class="card-icon">✓</div>
+
+                    <h3>Completed Tasks</h3>
+
+                    <h2>{{ completed_tasks }}</h2>
+
+                </div>
+
+
+                <div class="card blocker-card">
+
+                    <div class="card-icon">⚑</div>
+
+                    <h3>Open Blockers</h3>
+
+                    <h2>{{ open_blockers }}</h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- Quick Actions -->
+            <div class="section-heading">
+
+                <h2>Quick Actions</h2>
+
+                <p>Access your important project features.</p>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <a href="/projects" class="action-card">
+
+                    <span>＋</span>
+
+                    <h3>Add Project</h3>
+
+                    <p>Create and organize a new project.</p>
+
+                </a>
+
+
+                <a href="/tasks" class="action-card">
+
+                    <span>✓</span>
+
+                    <h3>Manage Tasks</h3>
+
+                    <p>Assign owners and track task progress.</p>
+
+                </a>
+
+
+                <a href="/blockers" class="action-card">
+
+                    <span>⚑</span>
+
+                    <h3>Manage Blockers</h3>
+
+                    <p>Track project issues and next steps.</p>
+
+                </a>
+
+
+                <a href="/handover" class="action-card">
+
+                    <span>▤</span>
+
+                    <h3>Handover Report</h3>
+
+                    <p>View your complete project report.</p>
+
+                </a>
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="dashboard-footer">
+
+                <p>
+                    © 2026 ProjectBridge.
+                    Smart Project Management and Handover System.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

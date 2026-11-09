@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gap Check | ProjectBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <h2 class="brand">ProjectBridge</h2>
+
+        <div class="menu">
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/projects" class="nav-link">Projects</a>
+            <a href="/tasks" class="nav-link">Tasks</a>
+            <a href="/updates" class="nav-link">Activity Updates</a>
+            <a href="/blockers" class="nav-link">Blockers</a>
+            <a href="/decisions" class="nav-link">Decisions</a>
+            <a href="/documents" class="nav-link">Documents</a>
+            <a href="/gap-check" class="nav-link active">Gap Check</a>
+            <a href="/handover" class="nav-link">Handover Report</a>
+        </div>
+
+        <div class="sidebar-footer">
+            Project Management System
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h2>Project Gap Check</h2>
+                <p>Check project information before handover.</p>
+            </div>
+        </div>
+
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div>
+                <h1>Handover Readiness Check</h1>
+                <p>
+                    Identify missing project information and
+                    make sure important details are recorded.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- Gap Summary -->
+        <section class="gap-summary">
+
+            <div class="gap-summary-icon">
+                {% if gaps %}
+                    !
+                {% else %}
+                    ✓
+                {% endif %}
+            </div>
+
+            <div>
+                {% if gaps %}
+                    <h2>{{ gaps|length }} Issues Found</h2>
+                    <p>Some important project information needs attention.</p>
+                {% else %}
+                    <h2>All Checks Passed!</h2>
+                    <p>No missing information was found in the current checks.</p>
+                {% endif %}
+            </div>
+
+        </section>
+
+
+        <!-- Missing Information -->
+        <section class="gap-list-section">
+
+            <div class="section-heading">
+                <h2>Missing Information</h2>
+                <p>Review the following items before completing the handover.</p>
+            </div>
+
+            <div class="gap-list">
+
+                {% if gaps %}
+
+                    {% for gap in gaps %}
+
+                        <div class="gap-item">
+                            <div class="gap-warning-icon">!</div>
+                            <p>{{ gap }}</p>
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="gap-success-card">
+                        <div class="success-icon">✓</div>
+                        <h3>Everything Looks Good!</h3>
+                        <p>
+                            Your project has passed all the available
+                            information checks.
+                        </p>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- Action Buttons -->
+        <section class="gap-actions">
+
+            <a href="/handover" class="gap-primary-btn">
+                View Handover Report →
+            </a>
+
+            <a href="/dashboard" class="gap-secondary-btn">
+                Back to Dashboard
+            </a>
+
+        </section>
+
+
+        <footer class="dashboard-footer">
+            ProjectBridge | Project Management System
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

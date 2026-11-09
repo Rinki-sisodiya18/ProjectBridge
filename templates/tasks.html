@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tasks | ProjectBridge</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <h2>Project<span>Bridge</span></h2>
+            <p>PROJECT MANAGEMENT</p>
+        </div>
+
+        <div class="menu">
+
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="/dashboard" class="nav-link">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/projects" class="nav-link">
+                <span>▣</span> Projects
+            </a>
+
+            <a href="/tasks" class="nav-link active">
+                <span>✓</span> Tasks
+            </a>
+
+            <a href="/updates" class="nav-link">
+                <span>↻</span> Activity Updates
+            </a>
+
+            <p class="menu-heading">MANAGEMENT</p>
+
+            <a href="/blockers" class="nav-link">
+                <span>⚑</span> Blockers
+            </a>
+
+            <a href="/decisions" class="nav-link">
+                <span>◇</span> Decisions
+            </a>
+
+            <a href="/documents" class="nav-link">
+                <span>▤</span> Documents
+            </a>
+
+            <p class="menu-heading">REPORTS</p>
+
+            <a href="/handover" class="nav-link">
+                <span>▧</span> Handover Report
+            </a>
+
+            <a href="/gap-check" class="nav-link">
+                <span>⌕</span> Gap Check
+            </a>
+
+        </div>
+
+        <div class="sidebar-footer">
+            <h3>ProjectBridge</h3>
+            <p>Smart Project Handover</p>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Page Header -->
+        <div class="topbar">
+
+            <div>
+                <h1>Project Tasks</h1>
+                <p>Organize tasks, assign owners and track progress.</p>
+            </div>
+
+        </div>
+
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+
+            <div>
+                <h2>Manage Your Tasks</h2>
+
+                <p>
+                    Keep track of project activities and
+                    make sure every task has an owner.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- Add Task Form -->
+        <section class="tasks-form-section">
+
+            <div class="section-heading">
+
+                <h2>Add New Task</h2>
+
+                <p>Enter task details and assign it to a team member.</p>
+
+            </div>
+
+            <div class="task-form-card">
+
+                <form method="POST">
+
+                    <div class="form-group">
+
+                        <label for="task_name">Task Name</label>
+
+                        <input
+                            type="text"
+                            id="task_name"
+                            name="task_name"
+                            placeholder="Enter task name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="owner">Task Owner</label>
+
+                        <input
+                            type="text"
+                            id="owner"
+                            name="owner"
+                            placeholder="Enter team member name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="project_id">Select Project</label>
+
+                        <select name="project_id" id="project_id" required>
+
+                            {% for project in projects %}
+
+                                <option value="{{ project[0] }}">
+                                    {{ project[1] }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-btn">
+                        + Add Task
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- Task List -->
+        <section class="task-list-section">
+
+            <div class="section-heading">
+
+                <h2>Task List</h2>
+
+                <p>View and manage all your project tasks.</p>
+
+            </div>
+
+
+            <div class="task-list">
+
+                {% for task in tasks %}
+
+                    <div class="task-item">
+
+                        <div class="task-item-icon">
+                            ✓
+                        </div>
+
+                        <div class="task-item-details">
+
+                            <h3>{{ task[2] }}</h3>
+
+                            <p>
+                                Task Owner:
+                                {{ task[4] or "Not Assigned" }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="task-item-actions">
+
+                            {% if task[3] == 'Completed' %}
+
+                                <span class="task-status completed">
+                                    Completed
+                                </span>
+
+                            {% else %}
+
+                                <span class="task-status pending">
+                                    Pending
+                                </span>
+
+                                <a href="/complete_task/{{ task[0] }}"
+                                   class="complete-task-btn">
+                                    Mark as Completed
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-tasks">
+
+                        <h3>No Tasks Yet</h3>
+
+                        <p>
+                            You haven't added any tasks.
+                            Create your first task using the form above.
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+
+            <p>
+                © 2026 ProjectBridge.
+                Smart Project Management and Handover System.
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

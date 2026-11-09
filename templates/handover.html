@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Handover Report | ProjectBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar no-print">
+
+        <h2 class="brand">ProjectBridge</h2>
+
+        <div class="menu">
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/projects" class="nav-link">Projects</a>
+            <a href="/tasks" class="nav-link">Tasks</a>
+            <a href="/updates" class="nav-link">Activity Updates</a>
+            <a href="/blockers" class="nav-link">Blockers</a>
+            <a href="/decisions" class="nav-link">Decisions</a>
+            <a href="/documents" class="nav-link">Documents</a>
+            <a href="/gap-check" class="nav-link">Gap Check</a>
+            <a href="/handover" class="nav-link active">Handover Report</a>
+        </div>
+
+        <div class="sidebar-footer">
+            Project Management System
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content handover-main">
+
+        <div class="topbar no-print">
+            <div>
+                <h2>Handover Report</h2>
+                <p>Complete overview of project information.</p>
+            </div>
+        </div>
+
+
+        <!-- Report Header -->
+        <section class="handover-header">
+
+            <div>
+                <span class="report-label">PROJECTBRIDGE REPORT</span>
+                <h1>Project Handover Report</h1>
+                <p>
+                    Complete information about project activities,
+                    responsibilities, decisions and progress.
+                </p>
+            </div>
+
+            <button onclick="window.print()" class="download-report-btn no-print">
+                ↓ Download / Save as PDF
+            </button>
+
+        </section>
+
+
+        <!-- Projects -->
+        <section class="report-section">
+
+            <div class="report-section-heading">
+                <span>01</span>
+                <div>
+                    <h2>Projects</h2>
+                    <p>Overview of registered projects.</p>
+                </div>
+            </div>
+
+            {% for project in projects %}
+
+                <div class="report-card">
+                    <h3>{{ project[1] }}</h3>
+                    <p>{{ project[2] or "No description available." }}</p>
+                </div>
+
+            {% else %}
+
+                <div class="report-empty">No projects available.</div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <!-- Tasks -->
+        <section class="report-section">
+
+            <div class="report-section-heading">
+                <span>02</span>
+                <div>
+                    <h2>Tasks</h2>
+                    <p>Task assignments and completion status.</p>
+                </div>
+            </div>
+
+            {% for task in tasks %}
+
+                <div class="report-card">
+                    <h3>{{ task[2] }}</h3>
+                    <p><strong>Project:</strong> {{ task[5] }}</p>
+                    <p><strong>Task Owner:</strong> {{ task[4] or "Not Assigned" }}</p>
+                    <p><strong>Status:</strong> {{ task[3] }}</p>
+                </div>
+
+            {% else %}
+
+                <div class="report-empty">No tasks available.</div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <!-- Blockers -->
+        <section class="report-section">
+
+            <div class="report-section-heading">
+                <span>03</span>
+                <div>
+                    <h2>Project Blockers</h2>
+                    <p>Problems that may affect project progress.</p>
+                </div>
+            </div>
+
+            {% for blocker in blockers %}
+
+                <div class="report-card">
+                    <h3>{{ blocker[2] }}</h3>
+                    <p><strong>Project:</strong> {{ blocker[6] }}</p>
+                    <p><strong>Description:</strong> {{ blocker[3] or "Not Added" }}</p>
+                    <p><strong>Next Step:</strong> {{ blocker[5] or "Not Added" }}</p>
+                    <p><strong>Status:</strong> {{ blocker[4] }}</p>
+                </div>
+
+            {% else %}
+
+                <div class="report-empty">No blockers available.</div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <!-- Activity Updates -->
+        <section class="report-section">
+
+            <div class="report-section-heading">
+                <span>04</span>
+                <div>
+                    <h2>Activity Updates</h2>
+                    <p>Recorded project activities and updates.</p>
+                </div>
+            </div>
+
+            {% for update in updates %}
+
+                <div class="report-card">
+                    <h3>{{ update[3] }}</h3>
+                    <p><strong>Project:</strong> {{ update[4] }}</p>
+                    <p>{{ update[2] }}</p>
+                </div>
+
+            {% else %}
+
+                <div class="report-empty">No activity updates available.</div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <!-- Decisions -->
+        <section class="report-section">
+
+            <div class="report-section-heading">
+                <span>05</span>
+                <div>
+                    <h2>Important Decisions</h2>
+                    <p>Important decisions and their reasons.</p>
+                </div>
+            </div>
+
+            {% for decision in decisions %}
+
+                <div class="report-card">
+                    <h3>{{ decision[2] }}</h3>
+                    <p><strong>Project:</strong> {{ decision[4] }}</p>
+                    <p><strong>Reason:</strong> {{ decision[3] }}</p>
+                </div>
+
+            {% else %}
+
+                <div class="report-empty">No decisions available.</div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <!-- Documents -->
+        <section class="report-section">
+
+            <div class="report-section-heading">
+                <span>06</span>
+                <div>
+                    <h2>Project Documents</h2>
+                    <p>Important project files and references.</p>
+                </div>
+            </div>
+
+            {% for document in documents %}
+
+                <div class="report-card">
+                    <h3>{{ document[2] }}</h3>
+                    <p><strong>Project:</strong> {{ document[5] }}</p>
+                    <p>{{ document[4] or "No description available." }}</p>
+
+                    {% if document[3] %}
+                        <a href="{{ document[3] }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="report-document-link no-print">
+                            Open Document →
+                        </a>
+                    {% endif %}
+                </div>
+
+            {% else %}
+
+                <div class="report-empty">No documents available.</div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <div class="report-footer">
+            <p>ProjectBridge | Project Management System</p>
+            <p>End of Handover Report</p>
+        </div>
+
+        <div class="no-print report-back">
+            <a href="/dashboard">← Back to Dashboard</a>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
