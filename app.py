@@ -88,6 +88,9 @@ def create_database():
     conn.close()
 
 
+create_database()
+
+
 # Home Page
 @app.route("/")
 def home():
